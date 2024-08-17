@@ -9,7 +9,7 @@ This repository contains shared utility functions used across multiple microserv
 To install this package, run:
 
 ```bash
-npm install utils
+npm i @balajidev/shared-utils
 ```
 
 ## Usage

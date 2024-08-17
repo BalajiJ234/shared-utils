@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.0.2] - 2024-08-17
+## [1.1.2] - 2024-08-17
 
 ### Added
 
@@ -8,7 +8,7 @@
 - **Email Validator**: Implemented an email validation utility.
 - **Logging**: Centralized logging functions, including audit logging for security-sensitive operations.
 
-## [1.0.3] - 2024-08-17
+## [1.1.3] - 2024-08-17
 
 ### Added
 
@@ -16,7 +16,7 @@
 - **Error Handling**: Added custom error classes for consistent error management.
 - **Date and Time Utilities**: Utilities for formatting dates and converting between time zones.
 
-## [1.0.4] - 2024-08-17
+## [1.1.4] - 2024-08-17
 
 ### Added
 
@@ -26,3 +26,7 @@
 - **HTTP Client**: Pre-configured HTTP client for making API requests.
 - **Rate Limiting**: Middleware for rate limiting API requests.
 - **Security Utilities**: Input sanitization and encryption/decryption utilities.
+
+## [1.1.5] - 2024-08-17
+
+- **Document updated** : Both Readme and Changelog files.
