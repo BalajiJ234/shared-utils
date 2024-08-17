@@ -43,6 +43,11 @@ jobs:
           registry-url: "https://registry.npmjs.org/"
           cache: "npm"
 
+      - name: Configure Git
+        run: |
+          git config --global user.email "balajijanarthanan1997@gmail.com"
+          git config --global user.name "Balaji J"
+
       - name: Install dependencies
         run: npm ci
 
@@ -52,8 +57,6 @@ jobs:
           npm publish --access public || (
             echo "Version exists, bumping version..." &&
             npm version patch &&
-            git config --global user.email "balajijanarthanan1997@gmail" &&
-            git config --global user.name "Balaji J" &&
             git push origin --tags &&
             npm publish --access public
           )
@@ -78,8 +81,8 @@ jobs:
         run: npm install
 
       - name: Commit any changes
-        run: |            
-          git config --global user.email "balajijanarthanan1997@gmail"
+        run: |
+          git config --global user.email "balajijanarthanan1997@gmail.com"
           git config --global user.name "Balaji J"
           git add .
           git commit -m "chore: commit changes before version bump" || echo "No changes to commit"
