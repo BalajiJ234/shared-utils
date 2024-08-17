@@ -1,7 +1,16 @@
-const { auditLog } = require("../../src/logging/audit");
+const { auditLog, auditLogger } = require("../../src/logging/audit");
 
 test("should log an audit message", () => {
-  const consoleSpy = jest.spyOn(console, "log");
+  const loggerSpy = jest.spyOn(auditLogger, "info");
   auditLog("User login", { userId: 123 });
-  expect(consoleSpy).toHaveBeenCalled();
+
+  expect(loggerSpy).toHaveBeenCalledWith(
+    expect.objectContaining({
+      message: "User login",
+      details: { userId: 123 },
+      level: "info",
+    })
+  );
+
+  loggerSpy.mockRestore();
 });
