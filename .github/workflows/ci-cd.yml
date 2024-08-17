@@ -48,7 +48,7 @@ jobs:
 
       - name: Publish to npm
         if: github.ref == 'refs/heads/main'
-        run: npm publish --access public  # Ensures the package is published as public
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -68,6 +68,13 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+
+      - name: Commit any changes
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add .
+          git commit -m "chore: commit changes before version bump" || echo "No changes to commit"
 
       - name: Bump version and push tags
         if: github.ref == 'refs/heads/main'
