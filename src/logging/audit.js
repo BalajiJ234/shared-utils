@@ -7,9 +7,11 @@ const auditLogger = winston.createLogger({
 });
 
 function auditLog(message, details) {
-  auditLogger.info({ message, details });
+  let log = auditLogger.info({ message, details });
+  return log;
 }
 
 module.exports = {
   auditLog,
+  auditLogger, // Export the logger for testing
 };
