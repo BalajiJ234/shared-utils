@@ -46,9 +46,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Publish to npm
+      - name: Publish to npm with auto-version bump
         if: github.ref == 'refs/heads/main'
-        run: npm publish --access public
+        run: |
+          npm publish --access public || (
+            echo "Version exists, bumping version..." &&
+            npm version patch &&
+            git config --global user.email "actions@github.com" &&
+            git config --global user.name "GitHub Actions" &&
+            git push origin --tags &&
+            npm publish --access public
+          )
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
