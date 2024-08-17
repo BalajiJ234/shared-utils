@@ -57,11 +57,12 @@ jobs:
           npm publish --access public || (
             echo "Version exists, bumping version..." &&
             npm version patch &&
-            git push origin --tags &&
+            git push origin HEAD:main --tags &&
             npm publish --access public
           )
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   version-bump:
     runs-on: ubuntu-latest
@@ -91,5 +92,4 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           npm version patch
-          git push origin --tags
-          git push origin main
+          git push origin HEAD:main --tags
