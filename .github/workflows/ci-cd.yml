@@ -52,8 +52,8 @@ jobs:
           npm publish --access public || (
             echo "Version exists, bumping version..." &&
             npm version patch &&
-            git config --global user.email "actions@github.com" &&
-            git config --global user.name "GitHub Actions" &&
+            git config --global user.email "balajijanarthanan1997@gmail" &&
+            git config --global user.name "Balaji J" &&
             git push origin --tags &&
             npm publish --access public
           )
@@ -78,9 +78,9 @@ jobs:
         run: npm install
 
       - name: Commit any changes
-        run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
+        run: |            
+          git config --global user.email "balajijanarthanan1997@gmail"
+          git config --global user.name "Balaji J"
           git add .
           git commit -m "chore: commit changes before version bump" || echo "No changes to commit"
 
