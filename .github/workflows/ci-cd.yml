@@ -92,4 +92,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           npm version patch
-          git push origin HEAD:main --tags
+          git push origin HEAD:main --tags || (
+            echo "Force pushing tags due to conflict..." &&
+            git push origin HEAD:main --tags --force
+          )
