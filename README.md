@@ -135,12 +135,45 @@ httpClient.get('/api/users/123')
 
 ### Rate Limiting
 
-Middleware for rate limiting API requests.
+This utility provides rate limiting middleware for Express.js applications.
 
 ```bash
-const { rateLimiter } = require('utils/api/rateLimiter');
+const { createRateLimiter } = require('utils/rateLimiter');
+const rateLimiter = createRateLimiter({ windowMs: 60000, max: 10 });
+app.use('/api', rateLimiter);
 
-app.use('/api', rateLimiter({ windowMs: 15 * 60 * 1000, max: 100 }));
+```
+
+### Caching
+
+These utilities help with caching data in Redis.
+
+```bash
+const { cacheResponse, getCachedResponse } = require('utils/cache');
+
+await cacheResponse('myKey', { data: 'value' });
+const data = await getCachedResponse('myKey');
+console.log(data); // { data: 'value' }
+```
+
+### Configuration Management
+
+This utility loads and validates configuration from environment variables.
+
+```bash
+const { config } = require('utils/config');
+console.log(config.PORT); // Outputs the port number from environment or default
+```
+
+### Internationalization (i18n)
+
+This utility supports translations and localization.
+
+```bash
+const { setLocale, translate } = require('utils/i18n');
+
+setLocale('fr');
+console.log(translate('greeting')); // Outputs 'Bonjour'
 ```
 
 ### Security Utilities
