@@ -1,4 +1,4 @@
-const { hashPassword, comparePassword } = require("../../src/auth/password");
+const { hashPassword, comparePassword } = require("../../src");
 
 test("should hash and compare a password correctly", () => {
   const password = "mysecretpassword";

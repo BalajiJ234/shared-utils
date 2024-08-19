@@ -1,4 +1,4 @@
-const logger = require("../../src/logging/logger");
+const logger = require("../../src");
 
 test("should log an info message", () => {
   logger.info = jest.fn();

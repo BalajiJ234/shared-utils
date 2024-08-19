@@ -1,4 +1,4 @@
-const { createRateLimiter } = require("../../src/api/rateLimiter");
+const { createRateLimiter } = require("../../src");
 const httpMocks = require("node-mocks-http");
 
 describe("Rate Limiter", () => {

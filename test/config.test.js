@@ -1,4 +1,4 @@
-const { loadConfig } = require("../src/config");
+const { loadConfig } = require("../src");
 const Joi = require("joi");
 
 test("should load and validate configuration", () => {

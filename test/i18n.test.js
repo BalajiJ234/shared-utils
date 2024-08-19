@@ -1,4 +1,4 @@
-const { setLocale, translate } = require("../src/i18n");
+const { setLocale, translate } = require("../src");
 
 test("should translate a key to a specified language", () => {
   setLocale("ta");
