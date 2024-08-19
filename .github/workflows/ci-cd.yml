@@ -52,6 +52,9 @@ jobs:
           registry-url: "https://registry.npmjs.org/"
           cache: "npm"
 
+      - name: Install GitHub CLI
+        run: sudo apt-get install -y gh
+
       - name: Configure Git
         run: |
           git config --global user.email "balajijanarthanan1997@gmail.com"
@@ -66,8 +69,11 @@ jobs:
           npm publish --access public || (
             echo "Version exists, bumping version..." &&
             npm version patch &&
-            git push origin HEAD:main --tags &&
-            npm publish --access public
+            git checkout -b version-bump-$(date +%s) &&
+            git add . &&
+            git commit -m "chore: bump version to $(npm version)" &&
+            git push origin HEAD &&
+            gh pr create --title "chore: bump version to $(npm version)" --body "Automatically bumped version to $(npm version)" --head $(git rev-parse --abbrev-ref HEAD) --base main
           )
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -87,6 +93,9 @@ jobs:
           node-version: "20"
           cache: "npm"
 
+      - name: Install GitHub CLI
+        run: sudo apt-get install -y gh
+
       - name: Install dependencies
         run: npm install
 
@@ -97,11 +106,12 @@ jobs:
           git add .
           git commit -m "chore: commit changes before version bump" || echo "No changes to commit"
 
-      - name: Bump version and push tags
+      - name: Bump version and create pull request
         if: github.ref == 'refs/heads/main'
         run: |
-          npm version patch
-          git push origin HEAD:main --tags || (
-            echo "Force pushing tags due to conflict..." &&
-            git push origin HEAD:main --tags --force
-          )
+          npm version patch &&
+          git checkout -b version-bump-$(date +%s) &&
+          git add . &&
+          git commit -m "chore: bump version to $(npm version)" &&
+          git push origin HEAD &&
+          gh pr create --title "chore: bump version to $(npm version)" --body "
