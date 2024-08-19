@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 
 // Load environment variables from ../secrets/.env
 dotenv.config({ path: path.resolve(__dirname, "../secrets/.env") });
+// console.log("Loaded ENV:", process.env.JWT_SECRET, process.env.REDIS_URL);
 
 function loadConfig(schema, env = process.env) {
   const { error, value } = schema.validate(env, { abortEarly: false });
