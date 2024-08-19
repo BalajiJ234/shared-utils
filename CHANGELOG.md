@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.8] - 2024-08-19
+
+### Middleware errorHandler
+
+- **errorHandler** - handle error type
+
 ## [1.1.7] - 2024-08-19
 
 ### Subfolder index.js Files:

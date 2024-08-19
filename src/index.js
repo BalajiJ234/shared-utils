@@ -5,6 +5,7 @@ module.exports = {
   ...require("./errors"),
   ...require("./id"),
   ...require("./logging"),
+  ...require("./middleware"),
   ...require("./notification"),
   ...require("./object"),
   ...require("./cache"),
