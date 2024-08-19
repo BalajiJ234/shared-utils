@@ -1,4 +1,11 @@
+// /src/config.js
+
+const path = require("path");
 const Joi = require("joi");
+const dotenv = require("dotenv");
+
+// Load environment variables from ../secrets/.env
+dotenv.config({ path: path.resolve(__dirname, "../secrets/.env") });
 
 function loadConfig(schema, env = process.env) {
   const { error, value } = schema.validate(env, { abortEarly: false });

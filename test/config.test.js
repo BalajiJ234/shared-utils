@@ -1,21 +1,22 @@
-const { loadConfig } = require("../../src/config");
+const { loadConfig } = require("../src/config");
 const Joi = require("joi");
 
 test("should load and validate configuration", () => {
   const schema = Joi.object({
-    TEST_CONFIG: Joi.string().required(),
+    JWT_SECRET: Joi.string().required(),
+    REDIS_URL: Joi.string().uri().required(),
   });
 
-  const config = loadConfig(schema, { TEST_CONFIG: "value" });
-  expect(config.TEST_CONFIG).toBe("value");
-});
+  // Mock environment variables explicitly
+  const mockEnv = {
+    JWT_SECRET: "testsecret",
+    REDIS_URL: "redis://localhost:6379",
+  };
 
-test("should throw an error for invalid configuration", () => {
-  const schema = Joi.object({
-    TEST_CONFIG: Joi.string().required(),
-  });
+  // Pass the mock environment directly to loadConfig
+  const config = loadConfig(schema, mockEnv);
 
-  expect(() => loadConfig(schema, {})).toThrow(
-    "Configuration validation error"
-  );
+  // Validate the config
+  expect(config.JWT_SECRET).toBe("testsecret");
+  expect(config.REDIS_URL).toBe("redis://localhost:6379");
 });

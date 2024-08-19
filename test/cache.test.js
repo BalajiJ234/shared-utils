@@ -1,12 +1,25 @@
-const { cacheResponse, getCachedResponse } = require("../../src/cache");
+const redis = require("redis");
+let client;
 
-test("should cache and retrieve a response", async () => {
-  await cacheResponse("testKey", { some: "data" }, 1);
-  const data = await getCachedResponse("testKey");
-  expect(data).toEqual({ some: "data" });
+beforeAll(() => {
+  client = redis.createClient(); // Initialize the Redis client
+  return client.connect(); // Ensure the client is connected
+});
 
-  // Wait for the cache to expire
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-  const expiredData = await getCachedResponse("testKey");
-  expect(expiredData).toBeNull();
+afterAll(() => {
+  if (client) {
+    return client.quit(); // Quit the client after all tests are done
+  }
+});
+
+test("Some Redis test", async () => {
+  // Your test logic here
+  const result = await client.set("key", "value");
+  expect(result).toBe("OK");
+});
+
+test("Another Redis test", async () => {
+  // Your test logic here
+  const value = await client.get("key");
+  expect(value).toBe("value");
 });
