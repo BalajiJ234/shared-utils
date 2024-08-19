@@ -1,5 +1,5 @@
 const { ValidationError, NotFoundError } = require("../errors");
-const logger = require("../logging/logger");
+// const logger = require("../logging/logger");
 
 function errorHandler(err, req, res, next) {
   // logger.error("Error encountered", { error: err });
