@@ -1,4 +1,4 @@
-const { auditLog, auditLogger } = require("../../src/logging/audit");
+const { auditLog, auditLogger } = require("../../src");
 
 test("should log an audit message", () => {
   const loggerSpy = jest.spyOn(auditLogger, "info");

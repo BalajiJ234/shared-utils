@@ -1,4 +1,4 @@
-const { validateEmail } = require("../../src/validation/emailValidation");
+const { validateEmail } = require("../../src");
 
 test("should validate correct email", () => {
   expect(validateEmail("test@example.com")).toBe(true);

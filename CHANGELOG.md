@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.7] - 2024-08-19
+
+### Subfolder index.js Files:
+
+**errors/index.js** : Consolidates and exports NotFoundError, ValidationError, and any other error classes.
+**validation/index.js** : Consolidates and exports taskValidator, emailValidation, and any other validation functions.
+Similar exports were done in other subfolders as well.
+
+**Main src/index.js** :
+
+The main index.js now exports all utilities, including the newly added taskValidator, NotFoundError, and ValidationError.
+
 ## [1.1.6] - 2024-08-18
 
 ### Added

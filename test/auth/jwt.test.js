@@ -1,4 +1,4 @@
-const { signToken, verifyToken } = require("../../src/auth/jwt");
+const { signToken, verifyToken } = require("../../src");
 
 test("should sign and verify a token", () => {
   const token = signToken({ userId: 123 });
