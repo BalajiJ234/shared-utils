@@ -1,7 +1,7 @@
 module.exports = {
   ...require("./auth/jwt"),
   ...require("./auth/password"),
-  ...require("./validation/emailValidator"),
+  ...require("./validation/emailValidation"),
   ...require("./validation/schemas"),
   ...require("./logging/logger"),
   ...require("./logging/audit"),
@@ -14,6 +14,9 @@ module.exports = {
   ...require("./notification/push"),
   ...require("./api/httpClient"),
   ...require("./api/rateLimiter"),
+  ...require("./cache"),
+  ...require("./i18n"),
+  ...require("./config"),
   ...require("./security/sanitize"),
   ...require("./security/encryption"),
 };
