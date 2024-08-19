@@ -12,6 +12,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -27,6 +33,9 @@ jobs:
 
       - name: Run tests
         run: npm test
+        env:
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          REDIS_URL: redis://localhost:6379
 
   publish:
     runs-on: ubuntu-latest
