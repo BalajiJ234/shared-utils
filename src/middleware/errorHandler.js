@@ -1,10 +1,8 @@
-// shared-utils/middleware/errorHandler.js
-
 const { ValidationError, NotFoundError } = require("../errors");
-const { logger } = require("../logging");
+const logger = require("../logging/logger");
 
 function errorHandler(err, req, res, next) {
-  logger.error("Error encountered", { error: err });
+  // logger.error("Error encountered", { error: err });
 
   if (err instanceof ValidationError) {
     return res.status(err.statusCode).json({ error: err.message });
@@ -14,7 +12,7 @@ function errorHandler(err, req, res, next) {
     return res.status(err.statusCode).json({ error: err.message });
   }
 
-  // Generic server error
+  // If the error is not an instance of our custom errors, return a generic 500
   res.status(500).json({ error: "An unexpected error occurred" });
 }
 
