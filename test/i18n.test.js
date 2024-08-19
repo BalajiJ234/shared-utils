@@ -1,4 +1,4 @@
-const { setLocale, translate } = require("../../src/i18n");
+const { setLocale, translate } = require("../src/i18n");
 
 test("should translate a key to a specified language", () => {
   setLocale("ta");
@@ -13,6 +13,7 @@ test("should translate a key to a specified language", () => {
 });
 
 test("should translate a key to the default language", () => {
+  setLocale("en");
   const translation = translate("greeting");
   expect(translation).toBe("Hello"); // Assuming 'greeting' in default (en) locale is 'Hello'
 });
