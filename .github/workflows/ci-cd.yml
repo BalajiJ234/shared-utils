@@ -73,9 +73,13 @@ jobs:
             npm version patch &&
             git checkout -b version-bump-$(date +%s) &&
             git add . &&
-            git commit -m "chore: bump version to $(npm version) [skip ci]" &&
-            git push origin version-bump &&
-            gh pr create --title "chore: bump version to $(npm version)" --body "Automatically bumped version to $(npm version)" --head version-bump --base main
+            git commit -m "chore: bump version to $(npm version) [skip ci]" || echo "No changes to commit" &&
+            if [ "$(git status --porcelain)" ]; then
+              git push origin version-bump &&
+              gh pr create --title "chore: bump version to $(npm version)" --body "Automatically bumped version to $(npm version)" --head version-bump --base main
+            else
+              echo "Nothing to commit; skipping push and PR creation."
+            fi
           )
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
