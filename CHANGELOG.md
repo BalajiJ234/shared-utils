@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.1.10] - 2024-08-21
+
+- Created **authMiddleware.js**: The authenticate middleware checks for a valid JWT and attaches the decoded data to req.user.
+- Updated **task-service**: The task-service can now use the authenticate middleware from @balajidev/shared-utils.
+- **Error Handling**: Added an UnauthorizedError class for handling authentication-related errors.
+
+## [1.1.9] - 2024-08-19
+
+- Document Update
+
 ## [1.1.8] - 2024-08-19
 
 ### Middleware errorHandler
