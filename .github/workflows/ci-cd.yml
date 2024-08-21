@@ -10,7 +10,6 @@ on:
 
 jobs:
   build:
-    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') && github.event.pull_request.head.ref != 'version-bump' }}
     runs-on: ubuntu-latest
 
     services:
@@ -39,7 +38,6 @@ jobs:
           REDIS_URL: redis://localhost:6379
 
   publish:
-    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') && github.event.pull_request.head.ref != 'version-bump' }}
     runs-on: ubuntu-latest
     needs: build
 
@@ -54,9 +52,6 @@ jobs:
           registry-url: "https://registry.npmjs.org/"
           cache: "npm"
 
-      - name: Install GitHub CLI
-        run: sudo apt-get install -y gh
-
       - name: Configure Git
         run: |
           git config --global user.email "balajijanarthanan1997@gmail.com"
@@ -70,19 +65,43 @@ jobs:
         run: |
           npm publish --access public || (
             echo "Version exists, bumping version..." &&
-            npm version patch --no-git-tag-version &&
-            git add package.json package-lock.json &&
-            git commit -m "chore: bump version to $(npm version | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')" || echo "No changes to commit"
+            npm version patch &&
+            git push origin HEAD:main --tags &&
+            npm publish --access public
           )
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Push and Create Pull Request
+  version-bump:
+    runs-on: ubuntu-latest
+    needs: publish
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Commit any changes
         run: |
-          if git diff --exit-code; then
-            echo "No changes to commit; skipping push and PR creation."
-          else
-            git push origin HEAD:refs/heads/version-bump-$(date +%s)
-            gh pr create --title "chore: bump version to $(npm version | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')" --body "Automatically bumped version to $(npm version)" --head version-bump-$(date +%s) --base main
-          fi
+          git config --global user.email "balajijanarthanan1997@gmail.com"
+          git config --global user.name "Balaji J"
+          git add .
+          git commit -m "chore: commit changes before version bump" || echo "No changes to commit"
+
+      - name: Bump version and push tags
+        if: github.ref == 'refs/heads/main'
+        run: |
+          npm version patch
+          git push origin HEAD:main --tags || (
+            echo "Force pushing tags due to conflict..." &&
+            git push origin HEAD:main --tags --force
+          )
