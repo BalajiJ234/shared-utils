@@ -71,7 +71,7 @@ jobs:
           npm publish --access public || (
             echo "Version exists, bumping version..." &&
             npm version patch --no-git-tag-version &&
-            git add package.json &&
+            git add package.json package-lock.json &&
             git commit -m "chore: bump version to $(npm version | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')" || echo "No changes to commit"
           )
         env:
@@ -83,6 +83,6 @@ jobs:
           if git diff --exit-code; then
             echo "No changes to commit; skipping push and PR creation."
           else
-            git push origin HEAD
-            gh pr create --title "chore: bump version to $(npm version | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')" --body "Automatically bumped version to $(npm version)" --head HEAD --base main
+            git push origin HEAD:refs/heads/version-bump-$(date +%s)
+            gh pr create --title "chore: bump version to $(npm version | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')" --body "Automatically bumped version to $(npm version)" --head version-bump-$(date +%s) --base main
           fi
