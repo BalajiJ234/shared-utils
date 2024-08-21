@@ -72,14 +72,10 @@ jobs:
             echo "Version exists, bumping version..." &&
             npm version patch &&
             git checkout -b version-bump-$(date +%s) &&
-            git add . &&
-            git commit -m "chore: bump version to $(npm version) [skip ci]" || echo "No changes to commit" &&
-            if [ "$(git status --porcelain)" ]; then
-              git push origin version-bump &&
-              gh pr create --title "chore: bump version to $(npm version)" --body "Automatically bumped version to $(npm version)" --head version-bump --base main
-            else
-              echo "Nothing to commit; skipping push and PR creation."
-            fi
+            git add package.json package-lock.json &&
+            git commit -m "chore: bump version to $(npm version)" || echo "No changes to commit" &&
+            git push origin version-bump-$(date +%s) --set-upstream &&
+            gh pr create --title "chore: bump version to $(npm version)" --body "Automatically bumped version to $(npm version)" --head version-bump-$(date +%s) --base main
           )
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
